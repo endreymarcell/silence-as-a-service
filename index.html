@@ -137,18 +137,18 @@
 		myVoice = new p5.Speech()
 		hasSpokenRecently = false
 
-		THRESHOLD = 300
+		THRESHOLD = 400
+		triggerCount = 0
 	}
 
 	function draw() {
 		ambient_sound_level = mic.getLevel() * 1000
 		if (ambient_sound_level > THRESHOLD) {
-			if (!hasSpokenRecently) {
-				myVoice.speak(random(messages))
-				hasSpokenRecently = true
-
-				setTimeout(function(){ hasSpokenRecently = false }, 3000)
-			}
+			triggerCount = max(triggerCount, 0)
+			triggerCount += 100
+		}
+		if (isTriggered() && !hasSpokenRecently) {
+			speak()
 		}
 	    buffer.push(Math.round(ambient_sound_level))
 	    if (buffer.length == UNIT_SIZE) {
@@ -175,10 +175,25 @@
 	    stroke("red")
 	    strokeWeight(3)
 	    line(0, getYForDataPoint(THRESHOLD * 2), width, getYForDataPoint(THRESHOLD * 2))
+	    triggerCount -= 1
+	    if (triggerCount % 10 == 0) {
+	    	print(triggerCount)
+	    }
 	}
 
     function getYForDataPoint(dataPoint) {
     	return height - dataPoint / 2
+    }
+
+    function speak() {
+    	myVoice.speak(random(messages))
+    	hasSpokenRecently = true
+    	setTimeout(function(){ hasSpokenRecently = false }, 3000)
+    	triggerCount = 0
+    }
+
+    function isTriggered() {
+    	return triggerCount > 600
     }
 </script>
 </html>
