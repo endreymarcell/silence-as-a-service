@@ -127,9 +127,6 @@
 
 	function setup() {
 		createCanvas(windowWidth, windowHeight)
-	    background("white")
-	    stroke("green")
-	    strokeWeight(4)
 	    mic = new p5.AudioIn()
 	    mic.start()
 	    dataPoints = []
@@ -163,6 +160,8 @@
 	    	dataPoints = dataPoints.slice(dataPoints.length - UNIT_NUMBER)
 	    }
 	    background("white")
+	    stroke("green")
+	    strokeWeight(4)
 	    for (i = 0; i < UNIT_NUMBER; i += 1) {
 	    	if (dataPoints[i] && dataPoints[i - 1]) {
 		    	line(
@@ -173,6 +172,9 @@
 		    	)
 	    	}
 	    }
+	    stroke("red")
+	    strokeWeight(3)
+	    line(0, getYForDataPoint(THRESHOLD), width, getYForDataPoint(THRESHOLD))
 	}
 
     function getYForDataPoint(dataPoint) {
