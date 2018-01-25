@@ -36,7 +36,7 @@
 		myVoice = new p5.Speech()
 		hasSpokenRecently = false
 
-		THRESHOLD = 120
+		THRESHOLD = 300
 	}
 
 	function draw() {
@@ -72,7 +72,7 @@
 	}
 
     function getYForDataPoint(dataPoint) {
-    	return height - dataPoint
+    	return height - dataPoint / 2
     }
 </script>
 </html>
