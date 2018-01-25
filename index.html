@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="noise level">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>BIO is noisy</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js"></script>
+	<script src="http://endreymarcell.hu/p5v2/p5.play.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.sound.min.js"></script>
+	<script src="p5.speech.js"></script>
+	<style>
+	body, html {
+	  margin: 0;
+	  padding: 0;
+	  overflow: hidden;
+	}
+	</style>
+</head>
+
+<body>
+</body>
+<script>
+	function setup() {
+		createCanvas(windowWidth, windowHeight)
+	    background("white")
+	    stroke("green")
+	    strokeWeight(4)
+	    mic = new p5.AudioIn()
+	    mic.start()
+	    dataPoints = []
+	    buffer = []
+	    lastPoint = 0
+	    UNIT_SIZE = 2
+	    UNIT_NUMBER = 1500
+		myVoice = new p5.Speech()
+		hasSpokenRecently = false
+
+		THRESHOLD = 120
+	}
+
+	function draw() {
+		ambient_sound_level = mic.getLevel() * 1000
+		if (ambient_sound_level > THRESHOLD) {
+			if (!hasSpokenRecently) {
+				myVoice.speak('Shut up')
+				hasSpokenRecently = true
+
+				setTimeout(function(){ hasSpokenRecently = false }, 3000)
+			}
+		}
+	    buffer.push(Math.round(ambient_sound_level))
+	    if (buffer.length == UNIT_SIZE) {
+	    	dataPoint = buffer.reduce((a, b) => a + b, 0)
+	    	dataPoints.push(dataPoint)
+	    	buffer = []
+	    }
+	    if (dataPoints.length > UNIT_NUMBER) {
+	    	dataPoints = dataPoints.slice(dataPoints.length - UNIT_NUMBER)
+	    }
+	    background("white")
+	    for (i = 0; i < UNIT_NUMBER; i += 1) {
+	    	if (dataPoints[i] && dataPoints[i - 1]) {
+		    	line(
+		    		(i - 1) * (width / UNIT_NUMBER),
+		    		getYForDataPoint(dataPoints[i - 1]),
+		    		(i) * (width / UNIT_NUMBER),
+		    		getYForDataPoint(dataPoints[i]),
+		    	)
+	    	}
+	    }
+	}
+
+    function getYForDataPoint(dataPoint) {
+    	return height - dataPoint
+    }
+</script>
+</html>
