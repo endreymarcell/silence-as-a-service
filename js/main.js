@@ -10,7 +10,7 @@ function setup() {
 
     dataPoints = []
 	avgPoints = []
-    maxWidth = width - 500
+    maxWidth = width - 100
     canSpeak = true
 }
 
