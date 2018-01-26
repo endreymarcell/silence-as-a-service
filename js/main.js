@@ -8,10 +8,13 @@ function setup() {
     mic = new p5.AudioIn()
     mic.start()
 
-    dataPoints = []
-	avgPoints = []
-    maxWidth = width - 100
+    maxWidth = width
+    dataPoints = Array(maxWidth).fill(0)
+	avgPoints = Array(maxWidth).fill(0)
     canSpeak = true
+    isDraggingLimitGuide = false
+    isDraggingWindowGuide = false
+    isRunning = true
 }
 
 function draw() {
@@ -33,29 +36,26 @@ function draw() {
 	avgPoints.push(avgPoint)
 
 	background("white")
-	stroke(250, 20, 20, 100)
+	
 	strokeWeight(1)
 	for (i = 0; i < dataPoints.length; i += 1) {
-		line(
-			i,
-			height,
-			i,
-			height - dataPoints[i]
-		)
+		stroke(50, 100, 250, map(i, 0, dataPoints.length, 0, 100))
+		line(i, height, i, height - dataPoints[i])
 	}
-	stroke("darkred")
+
 	strokeWeight(3)
 	for (i = 0; i < avgPoints.length; i += 1) {
-		line(
-			i,
-			height - avgPoints[i - 1],
-			i,
-			height - avgPoints[i]
-		)
+		stroke(0, 50, 200, map(i, 0, avgPoints.length, 0, 255))
+		line(i, height - avgPoints[i - 1], i, height - avgPoints[i])
 	}
+	stroke("red")
+	strokeWeight(3)
+	line(0, height - LIMIT, maxWidth, height - LIMIT)
+
 	stroke("black")
-	strokeWeight(2)
-	line(0, height - LIMIT, width, height - LIMIT)
+	strokeWeight(1)
+	line(maxWidth - WINDOW_SIZE, 0, maxWidth - WINDOW_SIZE, height)
+	line(maxWidth, 0, maxWidth, height)
 
 	if (avgPoint > LIMIT) {
 		if (canSpeak) {
@@ -65,8 +65,59 @@ function draw() {
 	} else {
 		canSpeak = true
 	}
+
+	if ((isMouseCloseToLimitGuide() && mouseX <= maxWidth) || isMouseCloseToWindowGuide()) {
+		cursor(MOVE)
+	} else {
+		cursor()
+	}
+
+	if (isDraggingLimitGuide) {
+		LIMIT = height - mouseY
+	} else if (isDraggingWindowGuide) {
+		WINDOW_SIZE = maxWidth - mouseX
+	}
+}
+
+function isMouseCloseToLimitGuide() {
+	return abs(mouseY - (height - LIMIT)) < 10
+}
+
+function isMouseCloseToWindowGuide() {
+	return abs(mouseX - (maxWidth - WINDOW_SIZE)) < 10
 }
 
 function speak() {
 	myVoice.speak(random(messages))
+}
+
+function keyPressed() {
+	if (key === " ") {
+		if (isRunning) {
+			noLoop()
+		} else {
+			loop()
+		}
+		isRunning = !isRunning
+	} else if (keyCode == UP_ARROW) {
+		LIMIT += 50
+	} else if (keyCode == DOWN_ARROW) {
+		LIMIT -= 50
+	} else if (keyCode == LEFT_ARROW) {
+		WINDOW_SIZE += 20
+	} else if (keyCode == RIGHT_ARROW) {
+		LIMIT -= 20
+	}
+}
+
+function mousePressed() {
+	if (isMouseCloseToLimitGuide()) {
+		isDraggingLimitGuide = true
+	} else if (isMouseCloseToWindowGuide()) {
+		isDraggingWindowGuide = true
+	}
+}
+
+function mouseReleased() {
+	isDraggingLimitGuide = isDraggingWindowGuide = false
 }
