@@ -7,6 +7,7 @@ function setup() {
 	myVoice = new p5.Speech()
     mic = new p5.AudioIn()
     mic.start()
+    textSize(20)
 
     maxWidth = width
     dataPoints = Array(maxWidth).fill(0)
@@ -52,11 +53,18 @@ function draw() {
 	stroke("red")
 	strokeWeight(3)
 	line(0, height - LIMIT, maxWidth, height - LIMIT)
+	fill("red")
+	noStroke()
+	text("LIMIT", 20, height - LIMIT - 10)
 
 	stroke("black")
 	strokeWeight(1)
 	line(maxWidth - WINDOW_SIZE, 0, maxWidth - WINDOW_SIZE, height)
 	line(maxWidth, 0, maxWidth, height)
+	fill("grey")
+	noStroke()
+	text("TIME\nWINDOW", maxWidth - WINDOW_SIZE + 10, 30)
+
 
 	if (avgPoint > LIMIT) {
 		if (canSpeak) {
