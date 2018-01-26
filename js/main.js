@@ -15,6 +15,7 @@ function setup() {
     isDraggingLimitGuide = false
     isDraggingWindowGuide = false
     isRunning = true
+    visualCounter = 0
 }
 
 function draw() {
@@ -60,6 +61,7 @@ function draw() {
 	if (avgPoint > LIMIT) {
 		if (canSpeak) {
 			speak()
+			visualCounter = 200
 			canSpeak = false
 		}
 	} else {
@@ -77,6 +79,9 @@ function draw() {
 	} else if (isDraggingWindowGuide) {
 		WINDOW_SIZE = maxWidth - mouseX
 	}
+
+	background(255, 0, 0, visualCounter)
+	visualCounter -= 2
 }
 
 function isMouseCloseToLimitGuide() {
