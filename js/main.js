@@ -106,7 +106,7 @@ function keyPressed() {
 	} else if (keyCode == LEFT_ARROW) {
 		WINDOW_SIZE += 20
 	} else if (keyCode == RIGHT_ARROW) {
-		LIMIT -= 20
+		WINDOW_SIZE -= 20
 	}
 }
 
