@@ -12,4 +12,8 @@ You can pause and restart the app with the space key.
 
 Enjoy the silence!  
 
+## Screenshot
 ![Screenshot](shutup.png)  
+
+## Not a screenshot
+![Silence](achmed.jpg)  
