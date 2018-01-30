@@ -1,4 +1,8 @@
-LIMIT = 150
+if (window.location.search.indexOf('?limit=') == 0) {
+	LIMIT = parseInt(window.location.search.substr('?limit='.length))
+} else {
+	LIMIT = 500
+}
 WINDOW_SIZE = 200
 AVG_FACTOR = 5
 
