@@ -56,7 +56,7 @@ function draw() {
 	avgPoints.push(avgPoint)
 
 	background("white")
-	text("Bookmark this page so your settings are saved\nDrag the sliders to set your limits", 30, 60);
+	text("Bookmark this page so your settings are saved\nDrag the sliders to set your limits\nYou can also use the arrow keys to move the sliders\nSpace pauses/unpauses measurement", 30, 60);
 	strokeWeight(1)
 	for (i = 0; i < dataPoints.length; i += 1) {
 		stroke(50, 100, 250, map(i, 0, dataPoints.length, 0, 100))
@@ -132,12 +132,16 @@ function keyPressed() {
 		isRunning = !isRunning
 	} else if (keyCode == UP_ARROW) {
 		LIMIT += 50
+		setParams()
 	} else if (keyCode == DOWN_ARROW) {
 		LIMIT -= 50
+		setParams()
 	} else if (keyCode == LEFT_ARROW) {
 		WINDOW_SIZE += 20
+		setParams()
 	} else if (keyCode == RIGHT_ARROW) {
 		WINDOW_SIZE -= 20
+		setParams()
 	}
 }
 
