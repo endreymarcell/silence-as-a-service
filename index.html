@@ -1,25 +1,66 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta name="description" content="noise level">
+<!doctype html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>BIO is noisy</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.4/p5.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.sound.min.js"></script>
-	<script src="lib/p5.speech.js"></script>
-	<style>
-	body, html {
-	  margin: 0;
-	  padding: 0;
-	  overflow: hidden;
-	}
-	</style>
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
-<body>
-</body>
-<script src="js/messages.js"></script>
-<script src="js/main.js"></script>
+    <title>SaaS - Silence as a service</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <!-- Custom styles for this template -->
+    <link href="/style.css" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h1>
+              <img src="/img/silence-logo.png">
+            <br/>
+                <span>Silence as a Service</span>
+          </h1>
+          
+        </div>
+      </header>
+
+      <main role="main" class="inner cover">
+        <h1 class="cover-heading">Feel like in a freakin concert?</h1>
+        <p class="lead">If people are too loud around you you are at the right place. Help them self-regulate with this neat tool</p>
+        <p class="lead">SaaS listens on a mic and alerts the loud crowd about their misbehavior with various witty lines.<p>
+        <p class="lead">
+          <a id="gen-dashboard" href="#" class="btn btn-lg btn-secondary">Take me to my safe place</a>
+        </p>
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>by <a href="https://github.com/endreymarcell">endreymarcell</a> &amp; <a href="https://github.com/ochronus/">ochronus</a></p>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+  </body>
 </html>
+
+
+
+
+<script>
+    $('#gen-dashboard').click(function() {
+        var newid = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        var newurl = "/d/" + newid;
+        window.location.replace(newurl);
+    });
+</script>
