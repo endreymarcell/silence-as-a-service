@@ -1,29 +1,43 @@
-if (window.location.search.indexOf('?limit=') == 0) {
-	LIMIT = parseInt(window.location.search.substr('?limit='.length))
-} else {
-	LIMIT = 500
-}
+LIMIT = 300
 WINDOW_SIZE = 200
 AVG_FACTOR = 5
 
+function loadParams() {
+	if (window.location.hash) {
+		hash = window.location.hash.substring(1)
+		paramParser = /limit=([0-9]+);window=([0-9]+)/g;
+		match = paramParser.exec(hash);
+		if (match && match.length > 2) {
+			LIMIT = parseInt(match[1])
+			WINDOW_SIZE = parseInt(match[2])
+		}
+	}
+}
+
+function setParams() {
+	window.location.hash = "#limit=" + LIMIT + ";window=" + WINDOW_SIZE
+}
+
 function setup() {
+	loadParams()
 	createCanvas(windowWidth, windowHeight)
 	myVoice = new p5.Speech()
-    mic = new p5.AudioIn()
-    mic.start()
-    textSize(20)
+	mic = new p5.AudioIn()
+	mic.start()
+	textSize(20)
 
-    maxWidth = width
-    dataPoints = Array(maxWidth).fill(0)
+	maxWidth = width
+	dataPoints = Array(maxWidth).fill(0)
 	avgPoints = Array(maxWidth).fill(0)
-    canSpeak = true
-    isDraggingLimitGuide = false
-    isDraggingWindowGuide = false
-    isRunning = true
-    visualCounter = 0
+	canSpeak = true
+	isDraggingLimitGuide = false
+	isDraggingWindowGuide = false
+	isRunning = true
+	visualCounter = 0
 }
 
 function draw() {
+	
 	ambient_sound_level = mic.getLevel() * 1000
 	dataPoints.push(ambient_sound_level)
 	if (dataPoints.length > maxWidth) {
@@ -42,7 +56,7 @@ function draw() {
 	avgPoints.push(avgPoint)
 
 	background("white")
-	
+	text("Bookmark this page so your settings are saved\nDrag the sliders to set your limits", 30, 60);
 	strokeWeight(1)
 	for (i = 0; i < dataPoints.length; i += 1) {
 		stroke(50, 100, 250, map(i, 0, dataPoints.length, 0, 100))
@@ -137,4 +151,5 @@ function mousePressed() {
 
 function mouseReleased() {
 	isDraggingLimitGuide = isDraggingWindowGuide = false
+	setParams()
 }
