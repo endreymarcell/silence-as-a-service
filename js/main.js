@@ -25,6 +25,7 @@ function setup() {
 	mic = new p5.AudioIn()
 	mic.start()
 	textSize(20)
+	textFont("Verdana")
 
 	maxWidth = width
 	dataPoints = Array(maxWidth).fill(0)
@@ -56,6 +57,7 @@ function draw() {
 	avgPoints.push(avgPoint)
 
 	background("white")
+	textAlign("left")
 	text("Bookmark this page so your settings are saved\nDrag the sliders to set your limits\nYou can also use the arrow keys to move the sliders\nSpace pauses/unpauses measurement", 30, 60);
 	strokeWeight(1)
 	for (i = 0; i < dataPoints.length; i += 1) {
@@ -71,17 +73,22 @@ function draw() {
 	stroke("red")
 	strokeWeight(3)
 	line(0, height - LIMIT, maxWidth, height - LIMIT)
+	fill("white")
+	rect(20, height - LIMIT - 20, 80, 40)
 	fill("red")
 	noStroke()
-	text("LIMIT", 20, height - LIMIT - 10)
+	textAlign("center", "center")
+	text("LIMIT", 60, height - LIMIT)
 
 	stroke("black")
 	strokeWeight(1)
 	line(maxWidth - WINDOW_SIZE, 0, maxWidth - WINDOW_SIZE, height)
 	line(maxWidth, 0, maxWidth, height)
+	fill("white")
+	rect(maxWidth - WINDOW_SIZE - 60, 20, 120, 60)
 	fill("grey")
 	noStroke()
-	text("TIME\nWINDOW", maxWidth - WINDOW_SIZE + 10, 30)
+	text("TIME\nWINDOW", maxWidth - WINDOW_SIZE, 50)
 
 
 	if (avgPoint > LIMIT) {
