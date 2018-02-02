@@ -35,6 +35,7 @@ function setup() {
 	isDraggingWindowGuide = false
 	isRunning = true
 	visualCounter = 0
+	helpOpacity = 0
 }
 
 function draw() {
@@ -57,8 +58,22 @@ function draw() {
 	avgPoints.push(avgPoint)
 
 	background("white")
-	textAlign("left")
-	text("Bookmark this page so your settings are saved\nDrag the sliders to set your limits\nYou can also use the arrow keys to move the sliders\nSpace pauses/unpauses measurement", 30, 60);
+	stroke("black")
+	noFill()
+	ellipse(50, 50, 40, 40)
+	if (dist(mouseX, mouseY, 50, 50) < 20) {
+		helpOpacity = min(helpOpacity + 30, 255)
+	} else {
+		helpOpacity = max(helpOpacity - 30, 0)
+	}
+
+	textAlign("center", "center")
+	noStroke()
+	fill("black")
+	text("?", 50, 50)
+	textAlign("left", "top")
+	fill(0, 0, 0, helpOpacity)
+	text("Up/Down changes the limit\nLeft/Right changes the time window\nSpace pauses/restarts the app\nBookmark this page to have your settings saved ", 80, 40);
 	strokeWeight(1)
 	for (i = 0; i < dataPoints.length; i += 1) {
 		stroke(50, 100, 250, map(i, 0, dataPoints.length, 0, 100))
@@ -89,7 +104,6 @@ function draw() {
 	fill("grey")
 	noStroke()
 	text("TIME\nWINDOW", maxWidth - WINDOW_SIZE, 50)
-
 
 	if (avgPoint > LIMIT) {
 		if (canSpeak) {
